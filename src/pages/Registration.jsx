@@ -4,21 +4,17 @@ import { useNavigate } from "react-router-dom";
 
 export const Registration = () => {
   const [formData, setFormData] = useState({
-    name: "",
+   
     username: "",
     email: "",
     password: "",
-    isMan: "",
+    gender:"",
     age: "",
   });
   const [errors, setErrors] = useState({});
-  const [isChecked, setIsChecked] = useState(false);
 
-  const handleCheckboxChange = (e) => {
-    setIsChecked(!isChecked);
-    formData.isMan = isChecked;
-    console.log("checked");
-  };
+
+  
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -43,12 +39,10 @@ export const Registration = () => {
 
   const validateForm = () => {
     const errors = {};
-    const { name, username, email, password, isMan, age } = formData;
+    const { username, email, password, gender, age } = formData;
 
     // Name validation
-    if (!name.trim()) {
-      errors.name = "Name is required";
-    }
+    
     if (!username.trim()) {
       errors.username = "Username is required";
     }
@@ -71,10 +65,11 @@ export const Registration = () => {
     if (!age) {
       errors.age = "Age is required";
     }
-    //Checked validation
-    if (isMan.checked) {
-      formData.isMan.value = true;
+    if (!gender) {
+      errors.gender = "Gender is required";
     }
+    
+   
     return errors;
   };
 
@@ -82,7 +77,7 @@ export const Registration = () => {
     console.log("login");
     try {
       let response = await fetch(
-        "https://first-node-js-app-r.herokuapp.com/api/users/register",
+        "https://todo-redev.herokuapp.com/api/users/register",
         {
           method: "POST",
           headers: {
@@ -110,16 +105,7 @@ export const Registration = () => {
       </div>
       <div className="presentation">
         <form className="form" onSubmit={handleSubmit}>
-          <label htmlFor="name">
-            <input
-              className="input-login"
-              value={formData.name}
-              placeholder="Enter your name..."
-              onChange={handleChange}
-              name="name"
-            />
-            {errors.name && <p>{errors.name}</p>}
-          </label>
+          
           <label htmlFor="username">
             <input
               className="input-login"
@@ -151,7 +137,15 @@ export const Registration = () => {
             />
             {errors.password && <p className="prompt">{errors.password}</p>}
           </label>
-         
+          <label htmlFor="gender">
+            <input
+              className="input-login"
+              value={formData.gender}
+              placeholder="Enter your  gender"
+              onChange={handleChange}
+              name="gender"
+            />
+          </label>
           
           
           <label htmlFor="age">
@@ -164,29 +158,12 @@ export const Registration = () => {
             />
           </label>
 
-          <label>
-            {" "}
-            See my password
-            <input className="change-text" type="checkbox" />
-          </label>
+          
           <button className="button-login" type="submit">
             Registration
           </button>
           {" "}
-            <label htmlFor="isMan">
-            {" "}
-            Agree with site policy
-                
-                <input
-                  className="change-text"
-                  value={formData.isMan}
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={handleCheckboxChange}
-                  name="isMan"
-                />
-             
-            </label>
+         
         </form>
 
         <p>

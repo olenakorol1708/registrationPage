@@ -12,7 +12,7 @@ export const Todopage = () => {
 
   useEffect(() => {
     fetch(
-     "https://first-node-js-app-r.herokuapp.com/api/todos", {
+     "https://todo-redev.herokuapp.com/api/todos", {
       method: "GET",
       headers: {
         "Content-type": "Application/json",
@@ -98,7 +98,7 @@ export const Todopage = () => {
       </form>
 
       {tasks.map((item) => (
-        <Task key={item.ID} item={item} tasks={tasks} setTasks={setTasks} />
+        <Task key = {item.ID} item={item} tasks={tasks} setTasks={setTasks} />
       ))}
     </div>
   );

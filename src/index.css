@@ -107,6 +107,9 @@ header ul li a{
   font-size: 18px;
 
 }
+.button-login{
+  margin-top:1rem;
+}
 .title{
   text-align: center;
   transform:translateY(50%);
