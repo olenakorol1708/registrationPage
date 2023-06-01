@@ -10,7 +10,7 @@ export const Task = ({ item, tasks, setTasks}) => {
 
   async function deleteFetch(ID){
     try{
-let response = await fetch(`https://first-node-js-app-r.herokuapp.com/api/todos/${ID}`,{
+let response = await fetch(`${process.env.REACT_APP_BASE_URL}/${ID}`,{
   method:"DELETE",
   headers:{
     "Content-type":"application/json",
@@ -37,7 +37,7 @@ const handleDelete =async(ID)=>{
 
   async function editFetch(ID){
     try{
-      let response = await fetch(`https://first-node-js-app-r.herokuapp.com/api/todos/${ID}`,{
+      let response = await fetch(`${process.env.REACT_APP_BASE_URL}/${ID}`,{
         method:"PATCH",
         headers:{
           "Content-type": "Application/json",

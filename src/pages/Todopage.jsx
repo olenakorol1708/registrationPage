@@ -5,12 +5,14 @@ import useLocalStorage from "../hook/useLocalStorage.js";
 import i18n from "../i18.js";
 import { Task } from "../todoComponents/Task.jsx";
 
+
 export const Todopage = () => {
   const [tasks, setTasks] = useState([]); //todo array
   const [item, setItem] = useState(""); //each ite in todo array
 
   useEffect(() => {
-    fetch("https://first-node-js-app-r.herokuapp.com/api/todos", {
+    fetch(
+     "https://first-node-js-app-r.herokuapp.com/api/todos", {
       method: "GET",
       headers: {
         "Content-type": "Application/json",
@@ -23,7 +25,7 @@ export const Todopage = () => {
   async function addTodoFetch(newTask) {
     try {
       const response = await fetch(
-        "https://first-node-js-app-r.herokuapp.com/api/todos",
+        `${process.env.REACT_APP_BASE_URL}`,
         {
           method: "POST",
           headers: {
@@ -55,10 +57,13 @@ export const Todopage = () => {
 
   const addItem = (e) => {
     e.preventDefault();
-    const newTask = { title: item };
+    if(item.trim() !== ''){
+       const newTask = { title: item };
 
     addTodoFetch(newTask);
-    setItem("");
+    setItem("");}
+  
+   
   };
 
   const handleChange = (e) => {

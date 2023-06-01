@@ -38,7 +38,7 @@ let info = {
   password:password,
   email:email
 };
-const response = await fetch("https://first-node-js-app-r.herokuapp.com/api/auth/login",{
+const response = await fetch(`${process.env.REACT_APP_MY_KEY}`,{
   method:"POST",
   headers:{
     "Content-Type":"application/json",
