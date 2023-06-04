@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import useLocalStorage from "../hook/useLocalStorage.js";
@@ -9,6 +10,7 @@ import { Task } from "../todoComponents/Task.jsx";
 export const Todopage = () => {
   const [tasks, setTasks] = useState([]); //todo array
   const [item, setItem] = useState(""); //each ite in todo array
+let navigate = useNavigate();
 
   useEffect(() => {
     fetch(
@@ -22,6 +24,12 @@ export const Todopage = () => {
       .then((response) => response.json())
       .then((data) => setTasks([...data]));
   }, []);
+
+  const logOutFromTodo = ()=>{
+   
+    navigate('/login')
+   
+  }
   async function addTodoFetch(newTask) {
     try {
       const response = await fetch(
@@ -37,6 +45,7 @@ export const Todopage = () => {
       );
       const data = await response.json();
       setTasks((prevState) => [...prevState, data]);
+      console.log(tasks)
     } catch (error) {
       console.log(error.message);
     }
@@ -72,6 +81,7 @@ export const Todopage = () => {
 
   return (
     <div className="container">
+  
       <div className="todo-title">
         <div>
           <h1>{t("It's your tasks for today")}</h1>
@@ -83,6 +93,7 @@ export const Todopage = () => {
             {t("change to")} {language === "uk" ? t("english") : t("ukrainian")}
           </button>{" "}
         </div>
+        <div> <button className="logout-button" onClick={logOutFromTodo}>Log out</button></div>
       </div>
 
       <form onSubmit={addItem}>
@@ -97,8 +108,8 @@ export const Todopage = () => {
         </button>
       </form>
 
-      {tasks.map((item) => (
-        <Task key = {item.ID} item={item} tasks={tasks} setTasks={setTasks} />
+      { tasks&&tasks.map((item) => (
+        <Task key = {item.id} item={item} tasks={tasks} setTasks={setTasks} />
       ))}
     </div>
   );

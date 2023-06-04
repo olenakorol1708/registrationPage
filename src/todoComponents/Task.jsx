@@ -1,82 +1,77 @@
-
 import React from "react";
+import { InputEdit } from "./InputEdit";
 
-
-export const Task = ({ item, tasks, setTasks}) => {
- 
-  const [text,setText] = React.useState(item.title);
+export const Task = ({ item, tasks, setTasks }) => {
+  const [text, setText] = React.useState(item.title);
   const [isEdit, setIsEdit] = React.useState(false);
-  
 
-  async function deleteFetch(ID){
-    try{
-let response = await fetch(`${process.env.REACT_APP_BASE_URL}/${ID}`,{
-  method:"DELETE",
-  headers:{
-    "Content-type":"application/json",
-    Authorization:"Bearer " +localStorage.getItem("token")
-  }
-})
-let result = await response.json();
-return result.ID
-    }
-    catch(error){
+  async function deleteFetch(id) {
+    try {
+      let response = await fetch(`${process.env.REACT_APP_BASE_URL}/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      let result = await response.json();
+      return result.id;
+    } catch (error) {
       console.log(error.message);
-  }}
-
-
-
-const handleDelete =async(ID)=>{
-  const id = await deleteFetch(ID)
-    const filteredArr = tasks.filter((item)=> item.ID !== id);
-    setTasks([...filteredArr])
-   
-    console.log(filteredArr)
-  
+    }
   }
 
-  async function editFetch(ID){
-    try{
-      let response = await fetch(`${process.env.REACT_APP_BASE_URL}/${ID}`,{
-        method:"PATCH",
-        headers:{
+  const handleDelete = async (id) => {
+    const target = await deleteFetch(id);
+    const filteredArr = tasks.filter((item) => item.id !== target);
+    setTasks([...filteredArr]);
+
+    console.log(filteredArr);
+  };
+
+  async function editFetch(id) {
+    try {
+      let response = await fetch(`${process.env.REACT_APP_BASE_URL}/${id}`, {
+        method: "PATCH",
+        headers: {
           "Content-type": "Application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
-        body:JSON.stringify({title:text})
-      })
+        body: JSON.stringify({ title: text }),
+      });
       let result = await response.json();
       return result;
-
-    }
-    catch(error){
-      console.log(error.message)
+    } catch (error) {
+      console.log(error.message);
     }
   }
-  const toggle = ()=>{
-    if(isEdit){
-      handleEdit(item.ID,text)
-      setIsEdit(!isEdit)
-    }else{
-      setIsEdit(!isEdit)
+  const toggle = () => {
+    if (isEdit) {
+      handleEdit(item.id, text);
+      setIsEdit(!isEdit);
+    } else {
+      setIsEdit(!isEdit);
     }
-  }
-  const handleEdit=async(ID,text)=>{
-    console.log("handleEdit",ID,text)
-  const arr =  tasks.map(item=>item.ID===ID?({...item,title:text}):(item));
-   await editFetch(ID)
-   setTasks([...arr])
-  
-  }
+  };
+  const handleEdit = async (id, text) => {
+    console.log("handleEdit", id, text);
+    const arr = tasks.map((item) =>
+      item.id === id ? { ...item, title: text } : item
+    );
+    await editFetch(id);
+    setTasks([...arr]);
+  };
   return (
-    <div className='item-block' key = {item.ID}>
-    <div className='flex-item' >
-     {isEdit ?
-     (<input className='choosen-item' onChange = {(e)=>setText(e.target.value)} value = {text}/>):
-     (  <p className='item'>{item.title}</p>)}   
-     </div><div className='flex-button'>
-    <button onClick = {()=>handleDelete(item.ID)}>Delete</button>
-    <button onClick = {toggle}>{isEdit? ('Save'):('Edit')}</button></div> 
+    <div className="item-block" key={item.id}>
+    <InputEdit isEdit = {isEdit} item = {item} setText = {setText} text = {text}/>
+      <div className="flex-button">
+        <button className="change-button" onClick={() => handleDelete(item.id)}>
+          Delete
+        </button>
+        <button className="change-button" onClick={toggle}>
+          {isEdit ? "Save" : "Edit"}
+        </button>
+      </div>
     </div>
   );
 };

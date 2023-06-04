@@ -13,7 +13,8 @@ export const Login = () => {
     console.log(isLoggedIn)
   }
   const logOut = ()=>{
-    setIsLoggedIn(false)
+    setIsLoggedIn(false);
+    
    
   }
   const handleChangeEmail = (e)=>{

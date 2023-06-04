@@ -33,7 +33,7 @@ export const Registration = () => {
     if (Object.keys(validationErrors).length === 0) {
       // Form submission logic here
       console.log("Form submitted:", formData);
-      registrFetch();
+      registrFetch(); 
     }
   };
 
@@ -57,16 +57,16 @@ export const Registration = () => {
     // Password validation
     if (!password) {
       errors.password = "Password is required";
-    } else if (password.length < 8) {
+    } else if (password.length < 8||!/[A-Za-z0-9!@#$%^&*()_+]/.test(password)) {
       errors.password =
-        'must be 8 characters long, with 1 uppercase & 1 lowercase letter, 1 number and 1 symbol"';
+        'Password must be 8 characters long, with 1 uppercase & 1 lowercase letter, 1 number and 1 symbol"';
     }
     //Age validation
-    if (!age) {
-      errors.age = "Age is required";
+    if ( !parseInt(age,10)>=10 && parseInt(age,10)<=100) {
+      errors.age = "This site only for people from 10 till 100 years";
     }
-    if (!gender) {
-      errors.gender = "Gender is required";
+    if (gender !== 'male'&& gender !== 'female') {
+      errors.gender = "Gender should be male or female";
     }
     
    
@@ -145,6 +145,7 @@ export const Registration = () => {
               onChange={handleChange}
               name="gender"
             />
+               {errors.gender && <p className="prompt">{errors.gender}</p>}
           </label>
           
           
@@ -156,6 +157,8 @@ export const Registration = () => {
               onChange={handleChange}
               name="age"
             />
+            
+            {errors.age && <p className="prompt">{errors.age}</p>}
           </label>
 
           
@@ -170,12 +173,7 @@ export const Registration = () => {
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
+       
         </p>
       </div>
     </div>

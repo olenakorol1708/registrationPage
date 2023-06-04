@@ -93,6 +93,13 @@ header ul li a{
   align-items: center;
   margin-top:1rem;
 }
+.logout-button{
+  background-color: #DC5B51;
+  color:white;
+  padding:1rem;
+  margin: 1rem;
+
+}
 .input-login{
   padding:1rem;
   margin-top:1rem;
@@ -170,11 +177,12 @@ align-items: center;
 }
 .input-add {
   padding-left: 1rem;
-  width: 33rem;
+  min-width: 33rem;
   height: 50px;
   margin: 0.5rem;
   background-color: azure;
 }
+
 .item-block {
 min-width: 20rem;
   display: flex;
@@ -224,4 +232,24 @@ align-items: center;
   background-color: #DC5B51;
   padding: 1rem;
   min-width: 20rem;
+}
+
+
+
+@media only screen and (max-width: 760px) {
+  body {
+    background-color: lightblue;
+  }
+  .input-add {
+   
+    min-width: 20rem;
+    }
+  .change-button{
+    min-width:2rem
+  }
+  .item {
+    
+    min-width: 10rem;
+    
+  }
 }
